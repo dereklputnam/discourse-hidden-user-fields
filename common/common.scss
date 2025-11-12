@@ -1,3 +1,8 @@
+// Show the native Discourse user field when user has permission (field is hidden by JS)
+body[class*="show-custom-field-"] .user-field {
+  display: block !important;
+}
+
 // Hide custom field display by default - specific to our components
 .user-card-custom-field.custom-field-display,
 .user-profile-custom-field.custom-field-display {

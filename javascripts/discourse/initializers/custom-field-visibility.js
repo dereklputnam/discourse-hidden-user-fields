@@ -29,19 +29,26 @@ export default {
         (group) => group.name === allowedGroupName
       );
 
-      if (isInAllowedGroup) {
-        // Find the custom field ID
-        const site = container.lookup("service:site");
-        const userFields = site.get("user_fields");
+      // Find the custom field ID
+      const site = container.lookup("service:site");
+      const userFields = site.get("user_fields");
 
-        if (userFields) {
-          const customField = userFields.find(
-            (field) => field.name.toLowerCase() === customFieldName.toLowerCase()
-          );
+      if (userFields) {
+        const customField = userFields.find(
+          (field) => field.name.toLowerCase() === customFieldName.toLowerCase()
+        );
 
-          if (customField) {
-            // Add body class to show this field
-            document.body.classList.add(`show-custom-field-${customField.id}`);
+        if (customField) {
+          // Hide this specific field by default for everyone
+          const fieldId = customField.id;
+          const style = document.createElement('style');
+          style.id = `custom-field-visibility-${fieldId}`;
+          style.innerHTML = `.user-field-${fieldId} { display: none !important; }`;
+          document.head.appendChild(style);
+
+          // If user is in allowed group, show the field
+          if (isInAllowedGroup) {
+            document.body.classList.add(`show-custom-field-${fieldId}`);
           }
         }
       }
