@@ -17,14 +17,23 @@ export default {
         return;
       }
 
-      // Get settings - theme settings are accessed with theme name prefix
-      const allowedGroupName = siteSettings.allowed_group_name;
-      const customFieldName = siteSettings.custom_field_name;
+      // Get settings - try different possible prefixes
+      let allowedGroupName = siteSettings.allowed_group_name;
+      let customFieldName = siteSettings.custom_field_name;
+
+      // Try with theme name prefix if not found
+      if (!allowedGroupName) {
+        allowedGroupName = siteSettings.custom_field_visibility_allowed_group_name;
+      }
+      if (!customFieldName) {
+        customFieldName = siteSettings.custom_field_visibility_custom_field_name;
+      }
 
       console.log("[Custom Field Visibility] Settings:", {
         allowedGroupName,
         customFieldName,
-        allSettings: Object.keys(siteSettings).filter(k => k.includes('field') || k.includes('group'))
+        allSettings: Object.keys(siteSettings).filter(k => k.includes('custom_field') || k.includes('allowed_group')),
+        allKeys: Object.keys(siteSettings).sort()
       });
 
       if (!allowedGroupName || !customFieldName) {
