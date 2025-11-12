@@ -1,13 +1,14 @@
-# Company Field Visibility Theme for Discourse
+# Custom Field Visibility Theme for Discourse
 
-A Discourse theme component that displays a custom "company" user field on user profiles and user cards, visible only to members of specified groups.
+A Discourse theme component that controls visibility of custom user fields based on group membership. Hide sensitive or internal user fields from public view while making them visible to specific groups.
 
 ## Features
 
-- **Group-Based Visibility**: Only users in the configured group can see the company field
-- **User Card Display**: Shows company information in user cards (hover cards)
-- **User Profile Display**: Shows company information on full user profile pages
-- **Configurable Settings**: Customize the allowed group name and field label
+- **Group-Based Visibility**: Control which groups can see which custom user fields
+- **Multiple Rules**: Configure multiple field/group combinations
+- **User Card & Profile**: Works on both user cards (hover) and full profile pages
+- **Native Display**: Uses Discourse's native field styling
+- **Easy Configuration**: JSON object editor for managing visibility rules
 
 ## Installation
 
@@ -29,34 +30,52 @@ A Discourse theme component that displays a custom "company" user field on user 
 
 ## Configuration
 
-After installation, configure the theme settings:
+After installation, configure visibility rules:
 
 1. Click on the installed theme
 2. Go to **Settings**
-3. Configure the following:
-   - **allowed_group_name**: The group that can see the company field (default: `netwrix_employees`)
-   - **field_label**: The label to display (default: `Company`)
+3. Edit **field_visibility_rules** using the JSON editor
+4. Add rules in this format:
+
+```yaml
+- field_name: company
+  allowed_group: netwrix_employees
+- field_name: department
+  allowed_group: staff
+- field_name: employee_id
+  allowed_group: admins
+```
+
+### Rule Properties
+
+- **field_name**: The exact name of the custom user field (case-insensitive)
+- **allowed_group**: The name of the group that can see this field
 
 ## Requirements
 
-- Your Discourse instance must have a custom user field named "company"
-- Users must be assigned to the visibility group (e.g., `netwrix_employees`)
+- Custom user fields must be created in **Admin > Customize > User Fields**
+- Groups must exist for the visibility rules to work
+- Users must be members of the specified groups to see the fields
 
 ## Theme Structure
 
 ```
 discourse-company-field-theme/
-├── about.json                          # Theme metadata and settings
+├── about.json                          # Theme metadata
+├── settings.yml                        # Theme settings schema
 ├── common/
-│   └── common.scss                      # CSS styling
-└── javascripts/discourse/connectors/
-    ├── user-card-metadata/              # User card display
-    │   ├── company-field.hbs
-    │   └── company-field.js
-    └── user-profile-primary/            # User profile display
-        ├── company-field.hbs
-        └── company-field.js
+│   └── common.scss                     # CSS for showing fields
+└── javascripts/discourse/initializers/
+    └── custom-field-visibility.js      # Main logic
 ```
+
+## How It Works
+
+1. On page load, the initializer reads your visibility rules
+2. For each rule, it finds the corresponding custom field
+3. CSS is injected to hide that field from everyone
+4. If the current user is in the allowed group, a body class is added
+5. The CSS then shows the field only when that body class is present
 
 ## License
 

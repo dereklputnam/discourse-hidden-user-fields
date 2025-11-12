@@ -1,14 +1,17 @@
-custom_field_name:
-  default: "company"
-  type: string
-  description: "The name of the custom user field to display (e.g., 'company', 'department', 'location')"
-
-allowed_group_name:
-  default: "netwrix_employees"
-  type: string
-  description: "The name of the group that can see the custom field"
-
-field_label:
-  default: "Company"
-  type: string
-  description: "The label to display for the custom field on user profiles and cards"
+field_visibility_rules:
+  type: objects
+  default: |
+    - field_name: company
+      allowed_group: netwrix_employees
+  description: "List of field visibility rules. Each rule defines which group can see which custom user field."
+  schema:
+    name: field_visibility_rule
+    properties:
+      field_name:
+        type: string
+        required: true
+        description: "The name of the custom user field (e.g., 'company', 'department', 'location')"
+      allowed_group:
+        type: string
+        required: true
+        description: "The name of the group that can see this field"
