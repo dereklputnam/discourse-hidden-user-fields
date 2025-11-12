@@ -1,0 +1,14 @@
+custom_field_name:
+  default: "company"
+  type: string
+  description: "The name of the custom user field to display (e.g., 'company', 'department', 'location')"
+
+allowed_group_name:
+  default: "netwrix_employees"
+  type: string
+  description: "The name of the group that can see the custom field"
+
+field_label:
+  default: "Company"
+  type: string
+  description: "The label to display for the custom field on user profiles and cards"

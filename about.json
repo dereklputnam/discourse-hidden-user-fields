@@ -2,29 +2,5 @@
   "name": "custom-field-visibility",
   "component": true,
   "about_url": "https://github.com/dereklputnam/discourse-company-field-theme",
-  "license_url": "https://github.com/dereklputnam/discourse-company-field-theme/blob/main/LICENSE",
-  "assets": {},
-  "color_schemes": {},
-  "modifiers": {},
-  "learn_more": "https://meta.discourse.org/t/beginners-guide-to-using-theme-creator-and-theme-cli-to-start-building-a-discourse-theme/108444",
-  "settings": [
-    {
-      "name": "custom_field_name",
-      "type": "string",
-      "default": "company",
-      "description": "The name of the custom user field to display (e.g., 'company', 'department', etc.)"
-    },
-    {
-      "name": "allowed_group_name",
-      "type": "string",
-      "default": "netwrix_employees",
-      "description": "The name of the group that can see the custom field"
-    },
-    {
-      "name": "field_label",
-      "type": "string",
-      "default": "Company",
-      "description": "The label to display for the custom field"
-    }
-  ]
+  "license_url": "https://github.com/dereklputnam/discourse-company-field-theme/blob/main/LICENSE"
 }
