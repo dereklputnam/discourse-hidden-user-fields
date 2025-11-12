@@ -1,6 +1,6 @@
-{{#if this.shouldShowCompanyField}}
-  <div class="user-card-company-field">
-    <span class="company-field-label">{{theme-setting "field_label"}}:</span>
-    <span class="company-field-value">{{this.companyValue}}</span>
+{{#if this.customFieldValue}}
+  <div class="custom-field-display user-card-custom-field">
+    <span class="custom-field-label">{{this.fieldLabel}}:</span>
+    <span class="custom-field-value">{{this.customFieldValue}}</span>
   </div>
 {{/if}}

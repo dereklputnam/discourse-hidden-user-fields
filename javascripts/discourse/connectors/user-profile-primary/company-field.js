@@ -1,75 +1,34 @@
-import Component from "@glimmer/component";
-import { service } from "@ember/service";
+import { computed } from "@ember/object";
 
-export default class CompanyField extends Component {
-  @service currentUser;
-  @service siteSettings;
+export default {
+  setupComponent(args, component) {
+    const siteSettings = component.siteSettings;
+    const customFieldName = siteSettings.custom_field_visibility_custom_field_name;
+    const fieldLabel = siteSettings.custom_field_visibility_field_label;
 
-  get shouldShowCompanyField() {
-    const currentUser = this.currentUser;
-    const allowedGroupName = this.siteSettings.custom_field_visibility_allowed_group_name;
+    component.setProperties({
+      fieldLabel: fieldLabel,
 
-    if (!currentUser) {
-      return false;
-    }
+      customFieldValue: computed("args.model.user_fields", function () {
+        const user = args.model;
+        if (!user?.user_fields) {
+          return null;
+        }
 
-    // Check if current user is in the allowed group
-    const userGroups = currentUser.groups || [];
-    const isInAllowedGroup = userGroups.some(
-      (group) => group.name === allowedGroupName
-    );
+        // Find the custom field ID
+        const site = component.site;
+        if (site?.user_fields) {
+          const customField = site.user_fields.find(
+            (field) => field.name.toLowerCase() === customFieldName.toLowerCase()
+          );
 
-    if (!isInAllowedGroup) {
-      return false;
-    }
+          if (customField?.id) {
+            return user.user_fields[customField.id];
+          }
+        }
 
-    // Check if the user being viewed has a custom field value
-    const userBeingViewed = this.args.outletArgs?.model;
-    if (!userBeingViewed?.user_fields) {
-      return false;
-    }
-
-    // Get the custom field ID from site settings
-    const customFieldId = this.getCustomFieldId();
-    if (!customFieldId) {
-      return false;
-    }
-
-    const customFieldValue = userBeingViewed.user_fields[customFieldId];
-    return !!customFieldValue;
+        return null;
+      })
+    });
   }
-
-  get companyValue() {
-    const userBeingViewed = this.args.outletArgs?.model;
-    const customFieldId = this.getCustomFieldId();
-
-    if (!customFieldId || !userBeingViewed?.user_fields) {
-      return null;
-    }
-
-    return userBeingViewed.user_fields[customFieldId];
-  }
-
-  getCustomFieldId() {
-    const customFieldName = this.siteSettings.custom_field_visibility_custom_field_name;
-
-    // Find the custom field ID by looking through all user fields
-    const userFields = this.args.outletArgs?.model?.user_fields;
-    if (!userFields) {
-      return null;
-    }
-
-    // The user_fields object has numeric keys (field IDs) as keys
-    // We need to find which one corresponds to the configured custom field
-    // This will be available in the site's user field definitions
-    const site = this.args.outletArgs?.model?.site;
-    if (site?.user_fields) {
-      const customField = site.user_fields.find(
-        (field) => field.name.toLowerCase() === customFieldName.toLowerCase()
-      );
-      return customField?.id;
-    }
-
-    return null;
-  }
-}
+};
