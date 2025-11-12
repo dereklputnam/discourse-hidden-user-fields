@@ -56,7 +56,12 @@ export default {
           const fieldId = customField.id;
           const style = document.createElement('style');
           style.id = `custom-field-visibility-${fieldId}`;
-          style.innerHTML = `.user-field-${fieldId} { display: none !important; }`;
+          style.innerHTML = `
+            .user-field-${fieldId} { display: none !important; }
+            .user-profile-fields .user-field-${fieldId} { display: none !important; }
+            .public-user-fields .user-field-${fieldId} { display: none !important; }
+            .collapsed-info .user-field[data-field-id="${fieldId}"] { display: none !important; }
+          `;
           document.head.appendChild(style);
           console.log("[Custom Field Visibility] Injected CSS to hide field ID:", fieldId);
 
