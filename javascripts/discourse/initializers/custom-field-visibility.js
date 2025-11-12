@@ -59,6 +59,9 @@ export default {
           style.id = `custom-field-visibility-${fieldId}`;
           style.innerHTML = `
             .public-user-field.${fieldName} { display: none !important; }
+            .public-user-field.public-user-field__${fieldName} { display: none !important; }
+            .user-card .public-user-field.${fieldName} { display: none !important; }
+            .user-card .public-user-field__${fieldName} { display: none !important; }
             .user-field-${fieldId} { display: none !important; }
             .user-profile-fields .user-field-${fieldId} { display: none !important; }
             .public-user-fields .user-field-${fieldId} { display: none !important; }
