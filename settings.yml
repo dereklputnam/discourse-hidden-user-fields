@@ -15,6 +15,6 @@ field_visibility_rules:
       allowed_groups:
         type: string
         label: "Allowed Groups"
-        description: "Comma-separated list of group names (e.g., netwrix_employees, admins, managers)"
+        description: "Comma-separated list of group names (e.g., employees, admins, managers)"
         validations:
           min_length: 1
