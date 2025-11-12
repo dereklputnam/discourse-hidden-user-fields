@@ -54,16 +54,18 @@ export default {
         if (customField) {
           // Hide this specific field by default for everyone
           const fieldId = customField.id;
+          const fieldName = customField.dasherized_name || customField.name.toLowerCase().replace(/\s+/g, '-');
           const style = document.createElement('style');
           style.id = `custom-field-visibility-${fieldId}`;
           style.innerHTML = `
+            .public-user-field.${fieldName} { display: none !important; }
             .user-field-${fieldId} { display: none !important; }
             .user-profile-fields .user-field-${fieldId} { display: none !important; }
             .public-user-fields .user-field-${fieldId} { display: none !important; }
             .collapsed-info .user-field[data-field-id="${fieldId}"] { display: none !important; }
           `;
           document.head.appendChild(style);
-          console.log("[Custom Field Visibility] Injected CSS to hide field ID:", fieldId);
+          console.log("[Custom Field Visibility] Injected CSS to hide field ID:", fieldId, "name:", fieldName);
 
           // If user is in allowed group, show the field
           if (isInAllowedGroup) {
