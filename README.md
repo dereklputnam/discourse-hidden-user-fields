@@ -1,4 +1,4 @@
-# User Field Visibility for Discourse
+# Hidden User Fields for Discourse
 
 > **⚠️ Disclaimer:** The author assumes no liability for data exposure or unintended visibility of user fields. Test thoroughly before production use.
 

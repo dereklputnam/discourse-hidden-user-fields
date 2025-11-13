@@ -1,5 +1,5 @@
 {
-  "name": "User Field Visibility",
+  "name": "Hidden User Fields",
   "component": true,
   "about_url": "https://github.com/dereklputnam/discourse-hidden-user-fields",
   "license_url": "https://github.com/dereklputnam/discourse-hidden-user-fields/blob/main/LICENSE"
